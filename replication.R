@@ -4,9 +4,8 @@
 setwd("jle_gs_nal/")
 
 # libaries
-require(foreign)
+# require(foreign) # better to use Python for conversion due to the version of Stata used
 require(plm)
-require(Matching)
 
 # Set random seed
 #   Note: A seed was not set in the original author's Stata code
