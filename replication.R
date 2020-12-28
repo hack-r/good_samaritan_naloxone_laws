@@ -157,50 +157,6 @@ poi1.t7 <- glm("newopioiddeath ~ nal_early + nal_mid + nal_late + gsl + pdmp + l
 summary(poi1.t7) # matches original estimates
 saveRDS(poi1.t7, "data/poi1.t7.RDS")
 
-
-# Temp New Code Area ------------------------------------------------------
-tr.nal <- ifelse(data$nal==1,1,0)
-X.nal  <- data[,!colnames(data) %in% c("nal_late","nal_early","nal_mid", "gsl","newopioiddeath",
-                                       "newopioiddeath_rate", "newheroindeaths", "newheroindeaths_rate",
-                                       "ln_newhdr", "ln_newnhdr", "new_nonheroinopioiddeath_rate",
-                                       )]
-ps.nal <- glm(tr.nal ~ X.nal[,1] + X.nal[,2] + X.nal[,3],family="binomial")
-summary(ps.nal)
-
-match.nal <- Match(X             = X.nal,
-                   Y             = data$lnnewopioiddeath_rate,
-                   Tr            = tr.nal,
-                   CommonSupport = T,
-                   estimand      = "ATT",
-                   M             = 2,
-                   exact         = F,
-                   replace       = T,
-                   ties          = T
-                   )
-summary(match.nal)
-
-# Simple OLS
-new.ols1.t3 <- glm("lnnewopioiddeath_rate ~ nal + gsl + lnpop + I(as.factor(fips)) + I(as.factor(year))", data = data, weights=data$population)
-summary(new.ols1.t3) # matches original
-
-
-# Kitchen sink OLS
-new.ols2.t3 <- glm("lnnewopioiddeath_rate ~ nal + gsl + lnpop + pdmp + lnpolice_percapita + mml + lnbeer + lncig + lncollege + lnpci + lnunemp + lnmw + I(as.factor(fips)) + I(as.factor(year))", data=data, weights=data$population)  
-summary(new.ols2.t3) # matches original
-saveRDS(new.ols2.t3,"data/new.ols2.t3.RDS")
-
-# Simple Poisson
-poi1.t3 <- glm("newopioiddeath ~ nal + gsl + lnpop + I(as.factor(fips)) + I(as.factor(year))", data=data, family= "poisson", weights=data$population)
-summary(poi1.t3) # matches original
-saveRDS(poi1.t3,"data/poi1.t3.RDS")
-
-# Kitchen sink Poisson
-poi2.t3 <- glm("newopioiddeath ~ nal + gsl + lnpop + pdmp + lnpolice_percapita + mml + lnbeer + lncig + lncollege + lnpci + lnunemp + lnmw + I(as.factor(fips)) + I(as.factor(year))", data=data, family= "poisson", weights=data$population)
-summary(poi2.t3) # matches original
-saveRDS(poi2.t3, "data/poi2.t3.RDS")
-
-
-
 # Code to recover cluster standard errors:
 
 # # compute Stata like df-adjustment
