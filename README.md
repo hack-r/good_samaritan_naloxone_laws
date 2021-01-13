@@ -5,6 +5,8 @@ The original Stata code and data were replicated in R. Results show that the pub
 
 Code for recovering Stata's clustered standard errors may be found at the end of the R file.
 
+*Update:* I received a response from one of the authors. It seems that the published data set contained 57 NA values which (in the unpublished original data) were 0's. In their published models they transformed the values to 0.1 so that they could take logs, but they were NA's in the published data set by mistake. This will be useful to know for testing their models on new years of data.
+
 ## References
 Rees, D. I., Sabia, J. J., Argys, L. M., Dave, D., & Latshaw, J. (2019). With a little help from my friends: The effects of good Samaritan and naloxone access laws on opioid-related deaths. The Journal of Law and Economics, 62(1), 1-27.
 
